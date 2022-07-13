@@ -112,6 +112,8 @@ class MediaChromeButton extends window.HTMLElement {
         return;
       }
 
+      e.stopPropagation();
+
       this.handleClick(e);
     };
 

@@ -17,9 +17,6 @@ import { fullscreenApi } from './utils/fullscreenApi.js';
 import { constToCamel } from './utils/stringUtils.js';
 import { containsComposedNode } from './utils/element-utils.js';
 
-import MediaChromeRange from './media-chrome-range.js';
-import MediaChromeButton from './media-chrome-button.js';
-
 import {
   MediaUIEvents,
   MediaUIAttributes,
@@ -744,12 +741,6 @@ class MediaController extends MediaContainer {
 
   keyboardShortcutHandler(e) {
     if (this.contains(e.target) || this.shadowRoot.contains(e.target)) {
-      // ignore space bar and enter
-      if (e.target instanceof MediaChromeButton && [' ', 'Enter'].includes(e.key)) {
-        return;
-      } else if (e.target instanceof MediaChromeRange && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
-        return;
-      }
 
       let eventName, currentTimeStr, currentTime, detail, evt;
       const seekOffset = DEFAULT_SEEK_OFFSET;
