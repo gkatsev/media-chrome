@@ -146,6 +146,30 @@ class MediaChromeRange extends window.HTMLElement {
 
     this.range = this.shadowRoot.querySelector('#range');
     this.range.addEventListener('input', this.updateBar.bind(this));
+
+
+    const ButtonPressedKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
+    // NOTE: There are definitely some "false positive" cases with multi-key pressing,
+    // but this should be good enough for most use cases.
+    const keyUpHandler = (e) => {
+      const { key } = e;
+      if (!ButtonPressedKeys.includes(key)) {
+        this.removeEventListener('keyup', keyUpHandler);
+        return;
+      }
+
+      // we need to stop propagation here, otherwise keyboard shortcuts will trigger on arrow keys when focused on the media-chrome-range
+      e.stopPropagation();
+    };
+
+    this.addEventListener('keydown', (e) => {
+      const { metaKey, altKey, key } = e;
+      if (metaKey || altKey || !ButtonPressedKeys.includes(key)) {
+        this.removeEventListener('keyup', keyUpHandler);
+        return;
+      }
+      this.addEventListener('keyup', keyUpHandler);
+    });
   }
 
   attributeChangedCallback(attrName, oldValue, newValue) {
