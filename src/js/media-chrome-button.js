@@ -92,7 +92,7 @@ class MediaChromeButton extends window.HTMLElement {
   }
 
   #clickListener = (e) => {
-    this.handleClick(e);
+    this.handleClick?.(e);
   }
 
   // NOTE: There are definitely some "false positive" cases with multi-key pressing,
@@ -104,7 +104,7 @@ class MediaChromeButton extends window.HTMLElement {
       return;
     }
 
-    this.handleClick(e);
+    this.handleClick?.(e);
   }
 
   #keydownListener = (e) => {

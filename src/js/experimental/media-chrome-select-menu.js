@@ -36,8 +36,6 @@ template.innerHTML = `
 `;
 
 class MediaChromeSelectMenu extends window.HTMLElement {
-  #handleClick;
-  #handleChange;
   #enabledState = true;
   #button;
   #buttonSlot;
@@ -61,9 +59,6 @@ class MediaChromeSelectMenu extends window.HTMLElement {
     this.nativeEl = buttonHTML;
 
     shadow.appendChild(buttonHTML);
-
-    this.#handleClick = this.#handleClick_.bind(this);
-    this.#handleChange = this.#handleChange_.bind(this);
 
     this.#button = this.shadowRoot.querySelector('media-chrome-button');
     this.#listbox = this.shadowRoot.querySelector('media-chrome-listbox');
@@ -104,11 +99,11 @@ class MediaChromeSelectMenu extends window.HTMLElement {
     });
   }
 
-  #handleClick_() {
+  #handleClick = () => {
     this.#toggle();
   }
 
-  #handleChange_() {
+  #handleChange = () => {
     this.#toggle();
   }
 
@@ -166,6 +161,7 @@ class MediaChromeSelectMenu extends window.HTMLElement {
 
   enable() {
     this.#button.removeAttribute('disabled');
+    this.#button.handleClick = undefined;
     this.#button.addEventListener('click', this.#handleClick);
     this.#toggleExpanded();
     this.#listbox.addEventListener('change', this.#handleChange);
